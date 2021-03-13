@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="数据库操作方式有：DML(定义数据库) DDL(操作数据库) DQL(查询数据库)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MYSql学习碎片">
+<meta property="og:url" content="http://example.com/2021/03/13/MySQL%E5%AD%A6%E4%B9%A0%E7%A2%8E%E7%89%87/index.html">
+<meta property="og:site_name" content="My Road">
+<meta property="og:description" content="数据库操作方式有：DML(定义数据库) DDL(操作数据库) DQL(查询数据库)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T15:27:35.000Z">
+<meta property="article:modified_time" content="2021-03-13T19:47:23.077Z">
+<meta property="article:author" content="Nobody雑草">
+<meta property="article:tag" content="MySQL笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/03/13/MySQL%E5%AD%A6%E4%B9%A0%E7%A2%8E%E7%89%87/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>MYSql学习碎片 | My Road</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">My Road</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Road of хакер</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nobody雑草</p>
+  <div class="site-description" itemprop="description">知行合一，这里是我的渗透之路(这里只为存储我自己的碎片笔记)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.dark5.net/" title="https:&#x2F;&#x2F;www.dark5.net" rel="noopener" target="_blank">5号黯区</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/MySQL%E5%AD%A6%E4%B9%A0%E7%A2%8E%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nobody雑草">
+      <meta itemprop="description" content="知行合一，这里是我的渗透之路(这里只为存储我自己的碎片笔记)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My Road">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MYSql学习碎片
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 23:27:35" itemprop="dateCreated datePublished" datetime="2021-03-13T23:27:35+08:00">2021-03-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-14 03:47:23" itemprop="dateModified" datetime="2021-03-14T03:47:23+08:00">2021-03-14</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><em>数据库操作方式有：DML(定义数据库) DDL(操作数据库) DQL(查询数据库)</em></p>
+<span id="more"></span>
+<p>– 查看所有数据库<br>SHOW DATABASES;</p>
+<p>– 创建数据库<br>CREATE DATABASE # 库名;</p>
+<p>– 选择或切换数据库<br>USE testc;# 库名</p>
+<p>– 修改数据库<br>ALTER DATABASE testc CHARACTER SET utf8mb4; # 库名 </p>
+<p>– 删除数据库<br>DROP DATABASE testc;# 库名</p>
+<p>– 查看该库所有表<br>SHOW TABLES;</p>
+<p>/*<br>mysql的常用数据类型</p>
+<p>int 整型<br>double 浮点型，两个参数 double（该浮点型的最长长度，小数点后几位）<br>char 固定长度字符串类型，参数 char（定义的长度 不足的位数会补足到该位数 应用于身份证等）<br>varchar 可变长度字符串，参数 varchar（定义的长度 不足的位数不会补足 会节省存储空间 应用于备注信息等）<br>text 字符串，适用于大文本内容，例如博客<br>date 日期类型，yyyy-MM-dd<br>*/</p>
+<p>– 创建表(括号内是字段名即列名以及每个字段的数据类型)<br>create table students (<br>    id int,<br>    student_name varchar(20),<br>    sex char(1),<br>    age int,<br>    achievement double(5,2),<br>    team_id int,<br>    graduation_date date<br>);</p>
+<p>– 删除表<br>drop table students;</p>
+<p>– 查看表结构<br>desc students;</p>
+<p>– 修改表结构<br>alter table students add achievement double(5,2); # 往该表中插入列并指定数据类型<br>alter table students change student_name student_names varchar(20); # 将该表指定列的名字进行修改<br>alter table students drop achievement; # 删除该表中的指定列</p>
+<p>– 往表中插入数据（增）<br>insert into students values (1, ‘付杰’, 0, 20,100,1,’2020-7-1’);<br>INSERT INTO students VALUES (2, ‘李四’, 0, 19, 199,1,’2020-7-1’);<br>INSERT INTO students VALUES (3, ‘王菲’, 1, 21,60,2,’2020-7-1’);<br>INSERT INTO students VALUES (4, ‘陈武’, 0, 25,88,2,’2020-7-1’);<br>INSERT INTO students VALUES (5, ‘xiaoming’, 1,18,188,2,’2020-7-1’);<br>INSERT INTO students VALUES (6, ‘xiaoqiang’, 0,22,157,3,’2020-7-1’);<br>INSERT INTO students VALUES (7, ‘xiaozhang’, 0,23,111,3,’2020-7-1’);<br>INSERT INTO students VALUES (8, ‘xiaohong’, 1,25,98,3,’2020-7-1’);<br>INSERT INTO students VALUES (9, ‘xiaoli’, 1,26,28,4,’2020-7-1’);<br>INSERT INTO students VALUES (10, ‘xiaogang’, 0,21,200,4,’2020-7-1’);<br>– 还可以指定某列添加数据<br>– insert into 表名(列名) values (要添加的数据，其类型必须与设置时的相同)</p>
+<p>– 查询表中的数据（查）基本查询 不影响数据<br>select * from students;<br>select student_name, achievement from students;# 根据列名查找数据<br>SELECT student_name, achievement, age+10 FROM students;# 还可以对列名进行操作，不影响原始数据<br>select student_name, achievement, age, age+10 10_years_later from students;# as 设置别名或者直接空格加别名也可以(中文字符串要加引号)<br>– 按条件查询<br>select * from students where id = 1; # where设置条件</p>
+<p>SELECT * FROM students WHERE age &gt;= 18 and age &lt;= 21; # and表示所有条件必须全部满足才可查询到<br>SELECT * FROM students WHERE age between 18 and 21; # 与and作用相同<br>select * from students where achievement is null;# 判断某列数据是否是null，如果是null则查询该数据<br>select * from students where age = 20 or age = 26; # or或，表示条件满足其一就可<br>select * from students where age in (18,20,25); # 与or作用相同</p>
+<p>select * from students where age &lt; 20; # 常用的判断符号有&gt; &lt; &lt;&gt;(不等于) &gt;= &lt;=</p>
+<p>select * from students where student_name like “%x%”;# 字段包含…的内容(百分号%表示任意字符开头或结尾)</p>
+<p>– 对表中数据进行排序(默认升序)<br>SELECT * FROM students ORDER BY age asc;# 升序<br>SELECT * FROM students ORDER BY age desc;# 降序<br>select * from students where team_id = 4 order by achievement desc; # 排序时先写查询条件再写排序<br>SELECT student_name, age, achievement FROM students ORDER BY age, achievement desc; # 可以按照多列(多个字段)进行排序</p>
+<p>– 修改表中的数据（改）<br>update students set student_name = ‘李四’, sex = 0 where id = 2;<br>update students set achievement = null where id = 1;<br>– update 表名 set 列名=”新值”,列名2=”新值2”… where 条件(例如列名称 = 某值);</p>
+<p>– 删除表中数据（删）<br>delete from students;<br>– 删除表中指定数据<br>– DELETE FROM 表名称 WHERE 列名称 = 值</p>
+<p>– 常用函数<br>select student_name, lower(student_name) from students;# # 将大写字母转换成小写 设置别名的方法也可以用到这里<br>SELECT student_name, upper(student_name) FROM students;# 将小写字母转换成大写 设置别名的方法也可以用到这里<br>SELECT student_name, substr(student_name, 5, 2) FROM students;# 截取字符串函数 参数分别为 要截取的数据列 从哪里开始截取 截取多少个字符串<br>SELECT student_name FROM students where SUBSTR(student_name, 5, 1) = ‘q’; # 可以将函数用作条件判断<br>select student_name, length(student_name) from students; # 显示数据的长度<br>SELECT student_name, ifnull(achievement, 0) ‘转换null值’FROM students; # 该函数表示：如果某项数据为null的话，将其转换为0 设置别名的方法也可以用到这里</p>
+<p>– 聚合函数<br>select sum(achievement) from students; # 某列数据相加之和 求和<br>select avg(achievement) from students; # 某列数据平均值<br>select max(age) from students; # 某列数据中的最大值<br>SELECT Min(age) FROM students; # 某列数据中的最小值<br>select count(<em>) from students; # 查询表中所有数据的总数<br>SELECT COUNT(achievement) FROM students; # 查询表中某列数据的总数（null不算值）<br>SELECT COUNT(achievement) FROM students where sex = 0; # 查询表中某列数据的总数（null不算值）可以加入条件<br>select distinct age from students; # 去除某列数据中的重复数据<br>SELECT count(DISTINCT age) FROM students; # 统计去除某列中的重复数据后的总数<br>select sex, count(</em>)from students group by sex; # group by 表示将查询到的数据按照某列数据进行分组<br>select team_id, sum(achievement) from students group by team_id having sum(achievement) &gt; 200;<br> 按照小组数据计算各组的总成绩，并用having判断如果结果大于200则查询<br>(having与where的区别是：having是group by的分支语句，只可以用于group by的后面 对分组的数据进行筛选)</p>
+<p>/*select语句 查询语句书写格式<br>select<br>    xxx某列数据（可以使用函数）<br>from<br>    表名<br>where<br>    判断条件<br>group by<br>    按照什么进行分组<br>having<br>    分组的判断条件<br>order by<br>    排序<br>limit<br>    设置查询的条数<br>*/<br>– limit关键字<br>select * from students limit 5; # 查询前x个数据<br>select * from students limit 2,3; # 由第三(第一个参数+1)个数据开始查询，取x(第二个参数)个数据<br>select * from students order by achievement desc limit 5; # 将该表中成绩降序排列 并取前五个数据 等同于 查询该表中成绩前五的学生数据</p>
+<p>– offset关键字<br>SELECT * FROM students ORDER BY achievement DESC LIMIT 5 offset 0; # offset关键字 紧跟在limit后面 他能决定该从那行数据开始查询显示（注意是从0开始的哦）<br>可以通过limit 与 offset函数实现翻页功能</p>
+<p>/*<br>约束与表关系<br>*/<br>– 约束条件分类：非空约束(保证字段的值不能为空)<br>create table teams (<br>    id INT,<br>    team_name varchar(20) not null<br>)</p>
+<p>drop table teams;</p>
+<p>insert into teams(id, team_name) values(1,”飞翔队”);</p>
+<p>INSERT INTO teams(id) VALUES(2); – 此时另一个字段不会变成null值，而是会报错，强制保证字段必须有值</p>
+<p>select * from teams;</p>
+<p>– 约束条件分类：默认约束(保证字段即使不插入数据，也会有一个默认值)<br>CREATE TABLE teams (<br>    id INT,<br>    team_name VARCHAR(20) default ‘匿名队’<br>)</p>
+<p>INSERT INTO teams(id) VALUES(2); – 此时某个字段即使用户不插入数据也会正常执行，因为该字段设置了一个默认值，会自动将默认值插入相印字段</p>
+<p>– 约束条件分类：主键约束(保证数据不为空，且唯一)primary key<br>CREATE TABLE teams (<br>    id INT primary key auto_increment,– auto_increment含义为主键的值会在每次添加数据时自增<br>    team_name VARCHAR(20)<br>);</p>
+<p>INSERT INTO teams(id, team_name) VALUES(1, “飞翔队”);</p>
+<p>INSERT INTO teams(id, team_name) VALUES(1, “蓝天队”); – 因为该主键的值已经存在，所以如果添加重复的值会报错</p>
+<p>INSERT INTO teams(team_name) VALUES(“飞翔队”); – 添加auto——increment后，此时无需添加主键的值，它自己会增加</p>
+<p>– 约束条件分类：外键约束(限制两个表的关系，一个表的外键必须为另一个表的主键，可以为空)<br>– 主键有多少，外键就只能有多少<br>– 语法：FOREIGN KEY(字段名) REFERENCES 另一个表名(字段名(主键))<br>– 含义为将该外键与主键关联起来</p>
+<p>/*<br>表关系分类</p>
+<p>一对多关系：例如一个小组对应多个学生</p>
+<p>多对多关系：例如一个学生选择多个老师的课程，一个老师教多个学生</p>
+<p>一对一关系：不常见，大部分该关系的数据可以放在一张表内存储<br>不过在想要隔离表与部分数据，例如为了隐藏或是作为临时数据需要定期清空时，这种关系可能存在<br>*/</p>
+<p>– 一对多关系，可通过上述的主外键操作来关联</p>
+<p>– 多对多关系，可通过创建关系表来创建该关系<br>create table teachers(<br>    id int primary key auto_increment,<br>    teacher_name varchar(20)<br>);</p>
+<p>insert into teachers(teacher_name) values(“李老师”);<br>INSERT INTO teachers(teacher_name) VALUEs(“王老师”);<br>select * from teachers;</p>
+<pre><code>-- 创建关系表
+</code></pre>
+<p>create table teacher_to_students(<br>    id int primary key auto_increment,<br>    teacher_id int, student_id int,<br>    foreign key (teacher_id)references teachers(id),<br>    foreign key (student_id)references students(id)<br>);</p>
+<pre><code>-- 再插入数据
+</code></pre>
+<p>insert into teacher_to_students(teacher_id, student_id) values(1,2)<br>– 如此一来，便将两个表的数据都关联起来了，形成了多对多的关系<br>select * from teacher_to_students;</p>
+<p>/*<br>查询拓展<br>之前的查询范围都是在一张表上，还有其他的查询方式可以查询多表<br>*/</p>
+<p>– 多表查询<br>    – 链接查询:适用于一对多关系<br>    – 1.内连接：获取两个表交集的所有内容<br>    – 语法：SELECT 左表名.字段名, 右表名.另一个字段名<br>    –        FROM  左表名 该表别名<br>    –        INNER JOIN 右表名 别名<br>    –        ON 条件;</p>
+<pre><code>-- 2.左外连接：显示左表全部内容+两表交集部分
+-- 语法：SELECT 左表名.字段名, 右表名.另一个字段名 
+--        FROM  左表名 该表别名
+--        LEFT JOIN 右表名 别名
+--        ON 条件;
+
+-- 3.右外连接：显示右表全部内容+两表交集部分
+-- 语法：SELECT 左表名.字段名, 右表名.另一个字段名 
+--        FROM  左表名 该表别名
+--        RIGHT JOIN 右表名 别名
+--        ON 条件;
+
+-- 适用于多对多关系的
+-- 将三个表关联起来
+-- 语法：SELECT 想要查询的内容 from 创建的关联表 该表别名
+--        INNER JOIN 表名 别名 ON 关联表别名.字段名 = 该表别名.字段名(设置条件)
+--        INNER JOIN 另一张表 别名 ON 关联表别名.字段名 = 该表别名.字段名(设置条件)
+</code></pre>
+<p>– 子查询<br>– 可以用select查询到的结果作为条件来进行另一层嵌套查询<br>– 例如：想要查询大于平均分的学生信息，就可以按照下列写法<br>SELECT student_name, achievement<br>    FROM students<br>    WHERE achievement &gt; (select avg(achievement) from students);</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL%E7%AC%94%E8%AE%B0/" rel="tag"># MySQL笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/12/%E6%BC%8F%E6%B4%9E%E5%88%86%E7%B1%BB%E5%8F%8A%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F/" rel="prev" title="漏洞分类及漏洞扫描">
+                  <i class="fa fa-chevron-left"></i> 漏洞分类及漏洞扫描
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nobody雑草</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
