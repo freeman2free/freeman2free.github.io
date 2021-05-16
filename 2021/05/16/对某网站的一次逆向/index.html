@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="逆向无定式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对某网站的一次逆向">
+<meta property="og:url" content="http://example.com/2021/05/16/%E5%AF%B9%E6%9F%90%E7%BD%91%E7%AB%99%E7%9A%84%E4%B8%80%E6%AC%A1%E9%80%86%E5%90%91/index.html">
+<meta property="og:site_name" content="My Road">
+<meta property="og:description" content="逆向无定式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/hw9PJ1HvINmiu5L.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/rtYCqileDoAc7w5.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/iePoAS3WpOl2B1G.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/w8rsqFOBbnKgtXJ.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/mBTbHhjd1p8RECn.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/ZRWmjk4AB6nxDpM.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/yz7RkBbKWYpTnOa.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/tgcD6XjvzkVlPb7.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/Azqku5sVg1ocMw4.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/ridaezOC9X4fGPJ.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/1l9zfPVkvXmp3BD.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/8KwzlP5criJBUp2.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/05/16/So7TBFRw6ur4kfe.jpg">
+<meta property="article:published_time" content="2021-05-16T05:41:12.725Z">
+<meta property="article:modified_time" content="2021-05-16T12:56:05.920Z">
+<meta property="article:author" content="Freedom雑草">
+<meta property="article:tag" content="逆向学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/16/hw9PJ1HvINmiu5L.jpg">
+
+
+<link rel="canonical" href="http://example.com/2021/05/16/%E5%AF%B9%E6%9F%90%E7%BD%91%E7%AB%99%E7%9A%84%E4%B8%80%E6%AC%A1%E9%80%86%E5%90%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>对某网站的一次逆向 | My Road</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">My Road</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Road of хакер</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E7%BD%91%E7%AB%99%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">一. 网站分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%E5%88%86%E6%9E%90%E7%BD%91%E7%AB%99"><span class="nav-number">1.1.</span> <span class="nav-text">1. 首先分析网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%86%E6%9E%90%E8%AF%B7%E6%B1%82%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">2. 分析请求包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E5%AF%BB%E6%89%BE%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二. 寻找分析算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">1.  搜索算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">2. 分析算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%93%E6%96%AD%E7%82%B9%EF%BC%8C%E6%B5%8B%E8%AF%95%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">3. 打断点，测试算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E4%BD%BF%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E8%AF%A5%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">三. 使用Python实现该算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%E5%AF%BC%E5%85%A5%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E5%BA%93"><span class="nav-number">3.1.</span> <span class="nav-text">1. 首先导入所需要的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%86%E6%9E%90URL%E5%B9%B6%E6%9E%84%E9%80%A0%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2. 分析URL并构造请求参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%B0%9D%E8%AF%95%E8%AF%B7%E6%B1%82%E5%B9%B6%E5%BE%97%E5%88%B0%E5%93%8D%E5%BA%94"><span class="nav-number">3.3.</span> <span class="nav-text">3. 尝试请求并得到响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9E%84%E9%80%A0aes%E8%A7%A3%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">4. 构造aes解密算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%B0%83%E7%94%A8%E7%AE%97%E6%B3%95%EF%BC%8C%E5%B9%B6%E6%9F%A5%E7%9C%8B%E7%BB%93%E6%9E%9C"><span class="nav-number">3.5.</span> <span class="nav-text">5. 调用算法，并查看结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四. 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Freedom雑草</p>
+  <div class="site-description" itemprop="description">知行合一，这里是我的渗透之路(这里只为存储我自己的碎片笔记)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.dark5.net/" title="https:&#x2F;&#x2F;www.dark5.net" rel="noopener" target="_blank">5号黯区</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/16/%E5%AF%B9%E6%9F%90%E7%BD%91%E7%AB%99%E7%9A%84%E4%B8%80%E6%AC%A1%E9%80%86%E5%90%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Freedom雑草">
+      <meta itemprop="description" content="知行合一，这里是我的渗透之路(这里只为存储我自己的碎片笔记)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="My Road">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对某网站的一次逆向
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-16 13:41:12 / 修改时间：20:56:05" itemprop="dateCreated datePublished" datetime="2021-05-16T13:41:12+08:00">2021-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Study/" itemprop="url" rel="index"><span itemprop="name">Study</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><em><strong>逆向无定式</strong></em></p>
+<span id="more"></span>
+
+<h2 id="一-网站分析"><a href="#一-网站分析" class="headerlink" title="一. 网站分析"></a>一. 网站分析</h2><p>本次逆向的网站是 <a target="_blank" rel="noopener" href="http://jzsc.mohurd.gov.cn/data/company">全国建筑市场监管公共服务平台（四库一平台）</a></p>
+<h3 id="1-首先分析网站"><a href="#1-首先分析网站" class="headerlink" title="1. 首先分析网站"></a>1. 首先分析网站</h3><p>​    通过点击以及翻页发现该网站传输数据使用异步的方式</p>
+<p><img src="https://i.loli.net/2021/05/16/hw9PJ1HvINmiu5L.jpg" alt="1.jpg">    </p>
+<p><img src="https://i.loli.net/2021/05/16/rtYCqileDoAc7w5.jpg" alt="2.jpg"></p>
+<p><img src="https://i.loli.net/2021/05/16/iePoAS3WpOl2B1G.jpg" alt="3.jpg"></p>
+<hr>
+<h3 id="2-分析请求包"><a href="#2-分析请求包" class="headerlink" title="2. 分析请求包"></a>2. 分析请求包</h3><p>对比两页的请求参数发现：该网站通过改变<em>pg</em>参数的值来实现翻页。<strong>同时也会发现该网站的请求是未加密的，但是返回的响应数据是加密的。</strong></p>
+<p><img src="https://i.loli.net/2021/05/16/w8rsqFOBbnKgtXJ.jpg" alt="4.jpg"></p>
+<p><img src="https://i.loli.net/2021/05/16/mBTbHhjd1p8RECn.jpg" alt="5.jpg"></p>
+<p><img src="https://i.loli.net/2021/05/16/ZRWmjk4AB6nxDpM.jpg" alt="6.jpg"></p>
+<p><img src="https://i.loli.net/2021/05/16/yz7RkBbKWYpTnOa.jpg" alt="7.jpg"></p>
+<p><em>说明该数据在后端进行加密，而后在前端使用js解密</em></p>
+<hr>
+<h2 id="二-寻找分析算法"><a href="#二-寻找分析算法" class="headerlink" title="二. 寻找分析算法"></a>二. 寻找分析算法</h2><p>我个人首先采取通过关键字的方式来搜索算法(当然也可以通过审计的方式来查找)</p>
+<h3 id="1-搜索算法"><a href="#1-搜索算法" class="headerlink" title="1.  搜索算法"></a>1.  搜索算法</h3><p>首先通过全局搜索(ctrl+shift+f)，按照算法关键字(md5、aes、rsa等)来搜索</p>
+<p><img src="https://i.loli.net/2021/05/16/tgcD6XjvzkVlPb7.jpg" alt="7.jpg">发现一个带有aes解密算法的js文件</p>
+<hr>
+<h3 id="2-分析算法"><a href="#2-分析算法" class="headerlink" title="2. 分析算法"></a>2. 分析算法</h3><p>进入该文件找到该算法</p>
+<p><img src="https://i.loli.net/2021/05/16/Azqku5sVg1ocMw4.jpg" alt="8.jpg"></p>
+<p>通过分析可得知:首先将参数t进行hex十六进制编码，之后将该十六进制的数据转换为base64字符串，最后使用aes进行解密</p>
+<p>目前该算法中有两个变量是未知的：m与f。但是可根据该算法的逻辑进行推测</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">h</span>(<span class="params">t</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">var</span> e = d.a.enc.Hex.parse(t)	<span class="comment">// 将t进行hex编码</span></span><br><span class="line">            , n = d.a.enc.Base64.stringify(e)	<span class="comment">// 再用base64编码后变为一个json字符串</span></span><br><span class="line">            , a = d.a.AES.decrypt(n, f, &#123;	<span class="comment">// 解密,f应该是密钥</span></span><br><span class="line">              iv: m,	<span class="comment">// m是偏移量</span></span><br><span class="line">              mode: d.a.mode.CBC, <span class="comment">//cbc模式</span></span><br><span class="line">              padding: d.a.pad.Pkcs7</span><br><span class="line">          &#125;)</span><br><span class="line">            , r = a.toString(d.a.enc.Utf8);</span><br><span class="line">          <span class="keyword">return</span> r.toString()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过搜索找到这两个变量</p>
+<p><img src="https://i.loli.net/2021/05/16/ridaezOC9X4fGPJ.jpg" alt="Inked屏幕截图 2021-05-16 142955_LI.jpg"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = d.a.enc.Utf8.parse(<span class="string">&quot;jo8j9wGw%6HbxfFn&quot;</span>)</span><br><span class="line">        , m = d.a.enc.Utf8.parse(<span class="string">&quot;0123456789ABCDEF&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-打断点，测试算法"><a href="#3-打断点，测试算法" class="headerlink" title="3. 打断点，测试算法"></a>3. 打断点，测试算法</h3><p>通过下断点的方式可看到变量r就是经过utf-8编码的解密后的响应数据</p>
+<p><img src="https://i.loli.net/2021/05/16/1l9zfPVkvXmp3BD.jpg" alt="屏幕截图 2021-05-16 152918.jpg"></p>
+<p><em>观察一下变量t和响应数据的值相同，可以断定t就是response的数据</em></p>
+<p>之后在控制台执行一下该结果</p>
+<p><img src="https://i.loli.net/2021/05/16/8KwzlP5criJBUp2.jpg" alt="屏幕截图 2021-05-16 153117.jpg"></p>
+<p>发现成功解密，得到响应数据</p>
+<hr>
+<h2 id="三-使用Python实现该算法"><a href="#三-使用Python实现该算法" class="headerlink" title="三. 使用Python实现该算法"></a>三. 使用Python实现该算法</h2><p>现在已知算法，以及所需要的变量，可以尝试使用python进行复现</p>
+<h3 id="1-首先导入所需要的库"><a href="#1-首先导入所需要的库" class="headerlink" title="1. 首先导入所需要的库"></a>1. 首先导入所需要的库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests	 <span class="comment"># 用于请求网页</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES	<span class="comment"># 用于实现AES算法</span></span><br><span class="line"><span class="keyword">import</span> binascii  <span class="comment"># 用于十六进制解码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-分析URL并构造请求参数"><a href="#2-分析URL并构造请求参数" class="headerlink" title="2. 分析URL并构造请求参数"></a>2. 分析URL并构造请求参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;http://jzsc.mohurd.gov.cn/api/webApi/dataservice/query/comp/list&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要传入的参数</span></span><br><span class="line">params = (</span><br><span class="line">    (<span class="string">&#x27;qy_type&#x27;</span>, <span class="string">&#x27;QY_ZZ_ZZZD_001&#x27;</span>),  <span class="comment"># 企业的类型</span></span><br><span class="line">    (<span class="string">&#x27;pg&#x27;</span>, <span class="string">&#x27;1&#x27;</span>),  <span class="comment"># 页码(从0开始计数)通过变换pg实现翻页</span></span><br><span class="line">    (<span class="string">&#x27;pgsz&#x27;</span>, <span class="string">&#x27;15&#x27;</span>),  <span class="comment"># 每页显示的数据条数</span></span><br><span class="line">    (<span class="string">&#x27;total&#x27;</span>, <span class="string">&#x27;450&#x27;</span>),  <span class="comment"># 总共的数据条数</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请求头</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;Chrome/90.0.4430.212 Safari/537.36&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;http://jzsc.mohurd.gov.cn/data/company&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-尝试请求并得到响应"><a href="#3-尝试请求并得到响应" class="headerlink" title="3. 尝试请求并得到响应"></a>3. 尝试请求并得到响应</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response = requests.get(url=url, headers=headers, params=params).text</span><br><span class="line">print(response)</span><br><span class="line"><span class="comment"># 上面已经分析过了，返回的响应结果经过了加密</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-构造aes解密算法"><a href="#4-构造aes解密算法" class="headerlink" title="4. 构造aes解密算法"></a>4. 构造aes解密算法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aesDecrypt</span>(<span class="params">key, content</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    aes解密算法(该算法有多种模式,这里使用CBC模式)</span></span><br><span class="line"><span class="string">    :param key: 密钥,对称加密解密只需要一把密钥</span></span><br><span class="line"><span class="string">    :param content: 要加密的内容</span></span><br><span class="line"><span class="string">    :return: 返回解密结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    iv = <span class="string">&#x27;0123456789ABCDEF&#x27;</span>  <span class="comment"># 偏移量,初始化向量,即上述js代码中的m变量</span></span><br><span class="line">    data = content.encode(<span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 将要加密的数据转换为bytes类型数据</span></span><br><span class="line">    encodebytes = binascii.a2b_hex(data)  <span class="comment"># 对二进制bytes做hex的解码(根據需求變換)，解码后就是干净的密文的bytes</span></span><br><span class="line"></span><br><span class="line">    cipher = AES.new(key.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.MODE_CBC, iv.encode(<span class="string">&#x27;utf-8&#x27;</span>))  <span class="comment"># 生成密钥</span></span><br><span class="line">    text_decrypted = cipher.decrypt(encodebytes)  <span class="comment"># 用密钥解密</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">unpadding</span>(<span class="params">s</span>):</span> <span class="keyword">return</span> s[<span class="number">0</span>: -s[-<span class="number">1</span>]]  <span class="comment"># 去除补位的函数</span></span><br><span class="line"></span><br><span class="line">    text_decrypted = unpadding(text_decrypted)  <span class="comment"># 去除补位</span></span><br><span class="line"></span><br><span class="line">    text_decrypted = text_decrypted.decode(<span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 对byte字符串按utf-8进行解码</span></span><br><span class="line">    <span class="keyword">return</span> text_decrypted</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-调用算法，并查看结果"><a href="#5-调用算法，并查看结果" class="headerlink" title="5. 调用算法，并查看结果"></a>5. 调用算法，并查看结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = aesDecrypt(key=<span class="string">&#x27;jo8j9wGw%6HbxfFn&#x27;</span>, content=response)  <span class="comment"># key参数的值就是上述js代码里的f变量</span></span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>得到结果，成功解密，说明逆向成功</p>
+<p><img src="https://i.loli.net/2021/05/16/So7TBFRw6ur4kfe.jpg" alt="Inked屏幕截图 2021-05-16 173149_LI.jpg"></p>
+<hr>
+<h2 id="四-总结"><a href="#四-总结" class="headerlink" title="四. 总结"></a>四. 总结</h2><p>逆向的总体思路是不变的，即：找到加密点、找到算法、复现算法。可是每个网站开发人员的思路又是千奇百怪的，可能会使用各种各样的骚思路。总之逆向与反逆向的战斗会一直持续，技术也会在这种碰撞中不断提升。逆向无他，唯耐心、手熟、思维敏捷而。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%80%86%E5%90%91%E5%AD%A6%E4%B9%A0/" rel="tag"># 逆向学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/16/Python%E5%AF%B9%E5%90%84%E7%A7%8D%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="prev" title="Python对各种加密算法的实现">
+                  <i class="fa fa-chevron-left"></i> Python对各种加密算法的实现
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Freedom雑草</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
